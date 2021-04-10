@@ -1,7 +1,7 @@
-import tensorflow.keras
+import tensorflow as tf
 
 
-class TrainingCallback(keras.callbacks.Callback):
+class TrainingCallback(tf.keras.callbacks.Callback):
     def __init__(self, training_logs):
         self.training_logs = training_logs
 

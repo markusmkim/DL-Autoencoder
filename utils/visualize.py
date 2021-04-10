@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from math import sqrt, ceil
@@ -60,22 +61,29 @@ def tsne_plot(data, labels):
     )
     
     
-def plot_logs(title, logs, metric, data_label, y_label, x_label="Epochs"):
-    data = []
-    val_data = []
+def plot_logs(title, logs_sets, metric, data_labels, y_label, x_label="Epoch"):
+    colors = ['#38abba', '#bf9215', '#3acf61', '#eb4034', '#81a346', '#2d1278']
+    color_index = 0
 
     val_metric = "val_" + metric
-
-    for log in logs:
-        data.append(log[metric])
-        val_data.append(log[val_metric])
-
-    x_axis = np.arange(len(data))
+    
     fig = plt.figure()
+    
+    for i in range(len(logs_sets)):
+        logs = logs_sets[i]
+        data = []
+        val_data = []
+        
+        for log in logs:
+            data.append(log[metric])
+            val_data.append(log[val_metric])
+        
+        x_axis = np.arange(len(data))
+        plt.plot(x_axis, data, marker='', color=colors[color_index], linewidth=2, label=(data_labels[i]))
+        plt.plot(x_axis, val_data, marker='', color=colors[color_index + 1], linewidth=2, label=("Val " + data_labels[i]))
+            
+        color_index += 2
+    
     plt.xlabel(x_label, fontdict={'size': 15})
     plt.ylabel(y_label, fontdict={'size': 15})
-    plt.plot(x_axis, data, marker='', color='#38abba', linewidth=2, label=(data_label))
-    plt.plot(x_axis, val_data, marker='', color='#bf9215', linewidth=2, label=("Val " + data_label))
-    #plt.plot(x_axis, yy_3, marker='', color='#3acf61', linewidth=2, label=(r'$h_{w}(x)$, w = 1.5'))
-    #plt.plot(x, y, marker='o', color='black', linewidth=0, markersize=8)
     plt.legend(fontsize="large")
