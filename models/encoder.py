@@ -10,4 +10,4 @@ def deep_conv_encoder(input_shape, output_dim):
     layer = layers.Dense(256, activation="relu")(layer)
     output_layer = layers.Dense(output_dim, activation="relu")(layer)
     # return layer
-    return Model(input_layer, output_layer)
+    return Model(input_layer, output_layer, name="encoder")

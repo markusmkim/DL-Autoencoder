@@ -8,6 +8,7 @@ def deep_conv_decoder(input_dim, output_shape):
     layer = layers.Reshape(((output_shape[0] - 4), (output_shape[1] - 4), 6))(layer)
     layer = layers.Conv2DTranspose(4, (3, 3), padding="valid", activation="relu")(layer)
     output_layer = layers.Conv2DTranspose(1, (3, 3), padding="valid", activation="relu")(layer)
+    # output_layer = layers.Conv2DTranspose(1, (3, 3), padding="valid", activation="relu")(layer)
     # print(layer.shape)
     # return layer
-    return Model(input_layer, output_layer)
+    return Model(input_layer, output_layer, name="decoder")
